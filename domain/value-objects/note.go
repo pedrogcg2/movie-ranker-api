@@ -2,21 +2,23 @@ package valueobjects
 
 import (
 	"strings"
+
+	"github.com/pedrogcg2/movie-ranker-api/domain/utils"
 )
 
 type Note struct {
 	value float32
 }
 
-func Create(value float32) Result[Note] {
+func Create(value float32) utils.Result[Note] {
 	validate := validate(value)
 
 	if strings.Count(validate, "") > 0 {
-		return Failure[Note](validate)
+		return utils.Failure[Note](validate)
 	}
 	note := Note{value: value}
 
-	return Success[Note](note)
+	return utils.Success[Note](note)
 }
 
 func validate(value float32) string {
