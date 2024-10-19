@@ -1,9 +1,8 @@
 package valueobjects
 
 import (
+	"movie-api/domain/utils"
 	"strings"
-
-	"github.com/pedrogcg2/movie-ranker-api/domain/utils"
 )
 
 type Note struct {
@@ -22,7 +21,7 @@ func Create(value float32) utils.Result[Note] {
 }
 
 func validate(value float32) string {
-	var result string = ""
+	var result string
 
 	if value < 0 {
 		return "Value should be bigger than 0"
