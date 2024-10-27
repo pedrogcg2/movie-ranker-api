@@ -1,17 +1,13 @@
 package controller
 
 import (
+	"movie-api/api/contracts"
 	"movie-api/domain/entities"
 	"movie-api/repository"
 
 	"gorm.io/gorm"
 )
 
-type UserDto struct {
-	Name     string
-	Password string
-	Image    string
-}
 type UserController struct {
 	Rp *repository.Repository[entities.User]
 }
@@ -21,7 +17,7 @@ func NewUserController(db gorm.DB) *UserController {
 	return &UserController{Rp: repository}
 }
 
-func (controller *UserController) CreateNewUser(dto UserDto) (*entities.User, error) {
+func (controller *UserController) CreateNewUser(dto contracts.UserDto) (*entities.User, error) {
 	user := &entities.User{
 		Name:     dto.Name,
 		Password: dto.Password,
