@@ -1,12 +1,14 @@
 package valueobjects
 
 import (
+	"database/sql/driver"
+	"fmt"
 	"movie-api/domain/utils"
 	"strings"
 )
 
 type Note struct {
-	value float32
+	NoteValue float32
 }
 
 func Create(value float32) utils.Result[Note] {
@@ -15,7 +17,7 @@ func Create(value float32) utils.Result[Note] {
 	if strings.Count(validate, "") > 0 {
 		return utils.Failure[Note](validate)
 	}
-	note := Note{value: value}
+	note := Note{NoteValue: value}
 
 	return utils.Success[Note](note)
 }
@@ -31,4 +33,20 @@ func validate(value float32) string {
 	}
 
 	return result
+}
+
+func (n *Note) Scan(value interface{}) error {
+	note, ok := value.(float32)
+
+	if !ok {
+		return fmt.Errorf("failed to read value")
+	}
+
+	result := Create(note)
+	n = &result.Value
+	return nil
+}
+
+func (n Note) Value() (driver.Value, error) {
+	return n.NoteValue, nil
 }

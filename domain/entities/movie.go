@@ -6,8 +6,8 @@ import (
 
 type Movie struct {
 	gorm.Model
-	name        string
-	description string
-	image       string
-	externalId  int
+	Name        string
+	Description string
+	Image       string
+	Externalid  int
 }

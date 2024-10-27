@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:17.0-alpine3.20
+    restart: always
+    hostname: postgres
+    environment:
+      POSTGRES_PASSWORD: pedro
+      POSTGRES_USER: postgres
+      POSTGRES_DB: MovieRanker
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  back:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

@@ -7,8 +7,10 @@ import (
 )
 
 type MovieAvaliation struct {
+	User User `gorm:"foreignKey:UserId"`
 	gorm.Model
-	movieId int
-	userId  int
-	note    valueobjects.Note
+	Movie   Movie `gorm:"foreignKey:MovieId"`
+	MovieId int
+	UserId  int
+	Note    valueobjects.Note
 }
