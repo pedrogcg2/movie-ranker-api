@@ -51,14 +51,14 @@ func (rp *Repository[T]) Create(entity *T) (*T, error) {
 	return entity, nil
 }
 
-func (rp *Repository[T]) CreateBatch(entities []T) ([]T, error) {
+func (rp *Repository[T]) CreateBatch(entities []T) (*[]T, error) {
 	result := rp.db.Create(&entities)
 
 	if result.Error != nil {
 		return nil, result.Error
 	}
 
-	return entities, nil
+	return &entities, nil
 }
 
 func (rp *Repository[T]) Update(entity *T) (*T, error) {
